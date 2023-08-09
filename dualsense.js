@@ -93,7 +93,7 @@ class Dualsensejs{
     }
 
     _normalizeAxis(value) {
-        return ((128 - value) / 128).toFixed(2);
+        return ((2 * value / 0xFF) - 1.0).toFixed(2);
     }
 
     _toBool(number){
@@ -145,7 +145,7 @@ class Dualsensejs{
         }
         this.updateOutputReport()
     }
-    
+
     micLedState = {
         off: 0x00,
         on: 0x01,
@@ -159,6 +159,7 @@ class Dualsensejs{
     };
 
     states = {
+        connectionState: '',
         triangle: false,
         circle: false,
         square: false,

@@ -9,8 +9,7 @@ Not finished yet, doc coming soon.
   - [x] USB
   - [ ] Bluetooth (Might be work but never tested)
   - [x] Inputs
-  - [x] Adaptive triggers
-  - [ ] Haptic feedbacks (should check if it's possible)
+  - [x] Adaptive triggers 
   - [x] Color LED
   - [x] Mute mic LED
   - [x] Player LEDs
@@ -21,18 +20,19 @@ Not finished yet, doc coming soon.
 ```js
 let ds = new Duelsensejs();
 
-function i(){
-    ds.init();
+ds.init();
     
-    setColor(0, 0, 255);
-    setMicLed(ds.micLedState.pulse);
-    if(ds.state.triangle){
-        ds.setTrigger(triggerState);
-    }
-    triggerState = {
-        selectedTrigger: ds.trigger.both,
-        mode: 0x02,
-        forces: [100, 255, 0, 0, 0, 0]
-    }
+setColor(0, 255, 0); // Set LED's color
+setMicLed(ds.micLedState.pulse); // Set mic led button LED state (on, off,, pulse)
+setPlayerNumber(4); // Set player number on the controller
+
+if(ds.state.triangle){ // Getting inputs
+    ds.setTrigger(triggerState); // Set trigger states from object
 }
+
+triggerState = { // Trigger object preset
+    selectedTrigger: ds.trigger.both,
+    mode: 0x02,
+    forces: [100, 255, 0, 0, 0, 0]
+};
 ```

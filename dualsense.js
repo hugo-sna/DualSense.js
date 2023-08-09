@@ -6,13 +6,17 @@ class Dualsensejs{
     async init() {
         if(!'hid' in navigator) {
             console.error('This browser doesn\'t support HID');
-            return
+            return;
         }
+
         let devices = await navigator.hid.requestDevice({
             filters: [{ 'vendorId': 0x054c, 'productId': 0x0ce6 }],
         });
+
         this.device = devices[0];
+
         await this.device.open();
+
         this.device.addEventListener("inputreport", async event => {
             const { data, device, reportId } = event;
             
@@ -89,7 +93,7 @@ class Dualsensejs{
     }
 
     _normalizeAxis(value) {
-        return value / 255
+        return ((128 - value) / 128).toFixed(2);
     }
 
     _toBool(number){
@@ -118,12 +122,6 @@ class Dualsensejs{
         this.updateOutputReport()
     }
 
-    micLedState = {
-        off: 0x00,
-        on: 0x01,
-        pulse: 0x02
-    };
-
     setTrigger(triggerConfig){
         if(triggerConfig.selectedTrigger == this.triggers.left | triggerConfig.selectedTrigger == this.triggers.both){
             this.outputReportBuffer[10] = triggerConfig.mode;
@@ -147,6 +145,12 @@ class Dualsensejs{
         }
         this.updateOutputReport()
     }
+    
+    micLedState = {
+        off: 0x00,
+        on: 0x01,
+        pulse: 0x02
+    };
 
     triggers = {
         left: 0,

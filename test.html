@@ -8,12 +8,17 @@
 <body>
     <a href='#' id="initBtn" onclick="i()">Connect to Dualsense.</a>
     <br/>
-    <script src="dualsense.min.js"></script>
+    <div id="inputDisplay"></p>
+    <audio src="http://127.0.0.1:5500/test_audio.aac" id="testAudio"></audio>
+    <script src="dualsense.js"></script>
     <script>
         let ds = new Dualsensejs();
 
+        let inputDisplay = document.getElementById('inputDisplay');
+
         function i(){
             ds.init();
+
             ds.setColor(0, 0, 255);
             ds.setMicLed(ds.micLedState.pulse);
             ds.setPlayerNumber(4);
@@ -25,6 +30,10 @@
             }
 
             ds.setTrigger(vibrateTrigger);
+            setInterval(() => {
+                inputDisplay.innerHTML = JSON.stringify(ds.states);
+            }, 100);
+
         }
     </script>
 </body>

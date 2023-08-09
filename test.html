@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dualsense web demo</title>
+</head>
+<body>
+    <a href="#" id="initBtn" onclick="i()">Connect to Dualsense.</a>
+    <br/>
+    <script src="dualsense.js"></script>
+    <script>
+        let ds = new Dualsensejs();
+
+        function i(){
+            ds.init();
+            ds.setColor(0, 0, 255);
+            ds.setMicLed(ds.micLedState.pulse); 
+
+            vibrateTrigger = {
+                selectedTrigger: ds.triggers.both,
+                mode: 0x06,
+                forces: [17, 63, 100, 0, 0, 0, 0]
+            }
+
+            ds.setTrigger(vibrateTrigger);
+        }
+    </script>
+</body>
+</html>

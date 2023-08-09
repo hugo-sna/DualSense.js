@@ -6,16 +6,17 @@
     <title>Dualsense web demo</title>
 </head>
 <body>
-    <a href="#" id="initBtn" onclick="i()">Connect to Dualsense.</a>
+    <a href='#' id="initBtn" onclick="i()">Connect to Dualsense.</a>
     <br/>
-    <script src="dualsense.js"></script>
+    <script src="dualsense.min.js"></script>
     <script>
         let ds = new Dualsensejs();
 
         function i(){
             ds.init();
             ds.setColor(0, 0, 255);
-            ds.setMicLed(ds.micLedState.pulse); 
+            ds.setMicLed(ds.micLedState.pulse);
+            ds.setPlayerNumber(4);
 
             vibrateTrigger = {
                 selectedTrigger: ds.triggers.both,

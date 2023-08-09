@@ -1,4 +1,3 @@
-//Vendor: 054c Product: 0ce6
 class Dualsensejs{
     device;
     outputReportBuffer = new Uint8Array(47);
@@ -22,7 +21,7 @@ class Dualsensejs{
 
             // Set controller states
             if(this.isOutputBufferUpdated){
-                this.outputReportBuffer[0] = 0x04| 0x08;
+                this.outputReportBuffer[0] = 0x04 | 0x08;
                 this.outputReportBuffer[1] = 0x01 | 0x04 | 0x10 | 0x40;
                 await this.device.sendReport(0x02, this.outputReportBuffer);
                 this.isOutputBufferUpdated = false;
@@ -34,21 +33,21 @@ class Dualsensejs{
     _processData(data){
         const buttons0 = data.getUint8(7);
         this.states.triangle = this._toBool(buttons0 & 0x80);
-        this.states.circle = this._toBool(buttons0 & 0x40);
-        this.states.cross = this._toBool(buttons0 & 0x20);
-        this.states.square = this._toBool(buttons0 & 0x10);
+        this.states.circle   = this._toBool(buttons0 & 0x40);
+        this.states.cross    = this._toBool(buttons0 & 0x20);
+        this.states.square   = this._toBool(buttons0 & 0x10);
 
         const dpad = buttons0 & 0x0f;
-        this.states.dpadUp = this._toBool(dpad == 0 || dpad == 1 || dpad == 7);
-		this.states.dpadDown = this._toBool(dpad == 3 || dpad == 4 || dpad == 5);
-		this.states.dpadLeft = this._toBool(dpad == 5 || dpad == 6 || dpad == 7);
+        this.states.dpadUp    = this._toBool(dpad == 0 || dpad == 1 || dpad == 7);
+		this.states.dpadDown  = this._toBool(dpad == 3 || dpad == 4 || dpad == 5);
+		this.states.dpadLeft  = this._toBool(dpad == 5 || dpad == 6 || dpad == 7);
 		this.states.dpadRight = this._toBool(dpad == 1 || dpad == 2 || dpad == 3);
 
-        const buttons1 = data.getUint8(8)
-        this.states.share = this._toBool(buttons1 & 0x10);
+        const buttons1     = data.getUint8(8)
+        this.states.share  = this._toBool(buttons1 & 0x10);
         this.states.option = this._toBool(buttons1 & 0x20);
-        this.states.l3 = this._toBool(buttons1 & 0x40);
-        this.states.r3 = this._toBool(buttons1 & 0x80);
+        this.states.l3     = this._toBool(buttons1 & 0x40);
+        this.states.r3     = this._toBool(buttons1 & 0x80);
 
         const buttons2 = data.getUint8(9);
         this.states.ps = this._toBool(buttons2 & 0x01);
@@ -56,9 +55,9 @@ class Dualsensejs{
         this.states.mute = this._toBool(buttons2 & 0x04);
         this.states.touchpad.pressed = this._toBool(buttons2 & 0x02);
 
-        this.states.gyro[0] = data.getUint8(16);
-        this.states.gyro[1] = data.getUint8(18);
-        this.states.gyro[2] = data.getUint8(20);
+        this.states.gyro[0]  = data.getUint8(16);
+        this.states.gyro[1]  = data.getUint8(18);
+        this.states.gyro[2]  = data.getUint8(20);
         this.states.accel[0] = data.getUint8(22);
         this.states.accel[1] = data.getUint8(24);
         this.states.accel[2] = data.getUint8(26);
@@ -68,8 +67,8 @@ class Dualsensejs{
         this.states.ls.y = this._normalizeAxis(data.getUint8(1));
         this.states.rs.x = this._normalizeAxis(data.getUint8(2));
         this.states.rs.y = this._normalizeAxis(data.getUint8(3));
-        this.states.l2 = this._normalizeAxis(data.getUint8(4));
-        this.states.r2 = this._normalizeAxis(data.getUint8(5));
+        this.states.l2   = this._normalizeAxis(data.getUint8(4));
+        this.states.r2   = this._normalizeAxis(data.getUint8(5));
 
         //Touch
         const touch00 = data.getUint8(32);
@@ -81,11 +80,11 @@ class Dualsensejs{
         const touch12 = data.getUint8(38);
         const touch13 = data.getUint8(39);
         this.states.touchpad.positions[0].active = !(touch00 & 0x80);
-        this.states.touchpad.positions[0].x = ((touch02 & 0x0F) << 8) | touch01;
-        this.states.touchpad.positions[0].y = (touch03 << 4) | ((touch02 & 0xF0) >> 4);
+        this.states.touchpad.positions[0].x      = ((touch02 & 0x0F) << 8) | touch01;
+        this.states.touchpad.positions[0].y      = (touch03 << 4) | ((touch02 & 0xF0) >> 4);
         this.states.touchpad.positions[1].active = !(touch10 & 0x80);
-        this.states.touchpad.positions[1].x = ((touch12 & 0x0F) << 8) | touch11;
-        this.states.touchpad.positions[1].y = (touch13 << 4) | ((touch12 & 0xF0) >> 4);
+        this.states.touchpad.positions[1].x      = ((touch12 & 0x0F) << 8) | touch11;
+        this.states.touchpad.positions[1].y      = (touch13 << 4) | ((touch12 & 0xF0) >> 4);
 
     }
 
@@ -188,13 +187,13 @@ class Dualsensejs{
             positions: [
                 {
                     active: false,
-                    x: [0, 0],
-                    y: [0, 0]
+                    x: 0,
+                    y: 0
                 },
                 {
                     active: false,
-                    y: [0, 0],
-                    X: [0, 0]
+                    y: 0,
+                    x: 0
                 }
             ]
             

@@ -7,7 +7,7 @@ Not finished yet, doc coming soon.
 
 ## Features:
   - [x] USB
-  - [ ] Bluetooth (Might be work but never tested)
+  - [ ] Bluetooth
   - [x] Inputs
   - [x] Adaptive triggers 
   - [x] Color LED
